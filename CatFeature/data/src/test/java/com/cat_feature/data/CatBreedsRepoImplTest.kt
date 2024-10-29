@@ -89,9 +89,7 @@ class CatBreedsRepoImplTest {
 
         val result = catBreedsRepo.getCatBreeds(any()).toList()
 
-        Assert.assertTrue(result.contains(ApiResponse.Error("Some thing went wrong")))
+        Assert.assertTrue(result.contains(ApiResponse.Error("Something went wrong")))
     }
-
-
 
 }

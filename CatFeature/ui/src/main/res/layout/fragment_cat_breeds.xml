@@ -12,12 +12,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="@{model.error ? View.VISIBLE : View.GONE}"
+            android:text="@string/error_message"/>
+
 
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:foregroundGravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +40,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_layout"
             android:layout_marginTop="16dp"

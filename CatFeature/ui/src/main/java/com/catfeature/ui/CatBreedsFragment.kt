@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +35,10 @@ class CatBreedsFragment : Fragment() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,7 +46,7 @@ class CatBreedsFragment : Fragment() {
         _binding = FragmentCatBreedsBinding.inflate(inflater, container, false)
         binding.model = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        adapter = CatBreedsDataAdapter(context = requireContext()){ itemClicked ->
+        adapter = CatBreedsDataAdapter(context = requireContext(), ListConfig()){ itemClicked ->
             viewModel.setSelectedBreed(itemClicked)
             navigator.openBreedDetailFragment()
         }
@@ -50,7 +56,10 @@ class CatBreedsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = "Cat Breeds"
+        (requireActivity() as AppCompatActivity).supportActionBar?.title =
+            requireContext().getString(R.string.cat_breeds)
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
         observeCatBreedData()
         observeLoadMoreData()
     }

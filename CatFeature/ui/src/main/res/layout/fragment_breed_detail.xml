@@ -8,6 +8,7 @@
             type="com.catfeature.ui.CatBreedsViewModel" />
         <import type="android.view.View"/>
     </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,4 +34,5 @@
         app:layout_constraintTop_toBottomOf="@id/image_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

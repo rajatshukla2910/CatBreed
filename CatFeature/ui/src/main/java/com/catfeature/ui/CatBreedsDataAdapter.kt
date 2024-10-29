@@ -6,17 +6,22 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.catfeature.data.CatApiData
+import androidx.recyclerview.widget.RecyclerView
+import com.catfeature.data.ListViewData
 import com.catfeature.ui.databinding.ItemLayoutBinding
-import com.squareup.picasso.Picasso
 
 class CatBreedsDataAdapter(
     val context: Context,
-    val onClick: (CatApiData) -> Unit
-) : ListAdapter<CatApiData, CatBreedsDataAdapter.CatBreedsDataViewHolder>(CatApiDataDiffCallback()) {
+    val config: ListConfig,
+    val itemCustomization: ItemCustomization =  DefaultItemCustomization(),
+    val onClick: (ListViewData) -> Unit
+) : ListAdapter<ListViewData, CatBreedsDataAdapter.CatBreedsDataViewHolder>(CatApiDataDiffCallback()) {
 
-    class CatBreedsDataViewHolder(val binding: ItemLayoutBinding) :
-        androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)
+   inner class CatBreedsDataViewHolder(val binding: ItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+            fun bind(data: ListViewData) {
+                itemCustomization.customize(this, config, data, context)
+            }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatBreedsDataViewHolder {
         val binding = DataBindingUtil.inflate<ItemLayoutBinding>(
@@ -26,6 +31,7 @@ class CatBreedsDataAdapter(
             false
         )
         return CatBreedsDataViewHolder(binding)
+
     }
 
     override fun onBindViewHolder(holder: CatBreedsDataViewHolder, position: Int) {
@@ -33,24 +39,20 @@ class CatBreedsDataAdapter(
         holder.itemView.setOnClickListener {
             onClick(item)
         }
-        Picasso.get()
-            .load(item.image?.url)
-            .into(holder.binding.imageView)
-
-        holder.binding.apply {
-            name.text = context.getString(R.string.breed, item.name)
-            lifeSpan.text = context.getString(R.string.lifespan, item.life_span)
-            origin.text =  context.getString(R.string.origin, item.origin)
-        }
+        holder.bind(item)
     }
 
-    class CatApiDataDiffCallback : DiffUtil.ItemCallback<CatApiData>() {
-        override fun areItemsTheSame(oldItem: CatApiData, newItem: CatApiData): Boolean {
+    class CatApiDataDiffCallback : DiffUtil.ItemCallback<ListViewData>() {
+        override fun areItemsTheSame(oldItem: ListViewData, newItem: ListViewData): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: CatApiData, newItem: CatApiData): Boolean {
-            return oldItem == newItem
+        override fun areContentsTheSame(oldItem: ListViewData, newItem: ListViewData): Boolean {
+            return oldItem.name == newItem.name &&
+                    oldItem.description == newItem.description &&
+                    oldItem.origin == newItem.origin &&
+                    oldItem.life_span == newItem.life_span &&
+                    oldItem.image == newItem.image
         }
     }
 }

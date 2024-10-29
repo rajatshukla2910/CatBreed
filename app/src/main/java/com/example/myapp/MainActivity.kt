@@ -3,16 +3,13 @@ package com.example.myapp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.catfeature.ui.BreedDetailFragment
+import com.catfeature.ui.CatBreedsFragment
 import com.catfeature.ui.FragmentNavigator
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), FragmentNavigator {
-
-    @Inject
-    lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +25,16 @@ class MainActivity : AppCompatActivity(), FragmentNavigator {
 
         if (savedInstanceState == null) {
 
-            navigator.openFragmentCatBreedsFragment()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment, CatBreedsFragment())
+                .commit()
         }
     }
 
     override fun openBreedDetailFragment() {
-        navigator.openFragmentBreedDetailFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, BreedDetailFragment())
+            .addToBackStack(null)
+            .commit()
     }
 }

@@ -6,6 +6,7 @@ import com.catfeature.data.ApiResponse
 import com.catfeature.data.CatApiData
 import com.catfeature.data.CatBreedsRepo
 import com.catfeature.data.ImageData
+import com.catfeature.data.ListViewData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
@@ -84,7 +85,7 @@ class CatBreedsViewModelTest {
         val dataFlow = flow { emit(ApiResponse.Success(mockData)) }
         whenever(catBreedsRepo.getCatBreeds(any())).thenReturn(dataFlow)
         val viewModel = CatBreedsViewModel(catBreedsRepo)
-        val dataObserver = mock<Observer<List<CatApiData>>>()
+        val dataObserver = mock<Observer<List<ListViewData>>>()
         viewModel.catBreeds.observeForever(dataObserver)
         advanceUntilIdle()
         verify(dataObserver).onChanged(mockData)
@@ -108,7 +109,7 @@ class CatBreedsViewModelTest {
         val viewModel = CatBreedsViewModel(catBreedsRepo)
         viewModel.setSelectedBreed(mockData)
 
-        val selectedBreedObserver = mock<Observer<CatApiData>>()
+        val selectedBreedObserver = mock<Observer<ListViewData>>()
         viewModel.selectedbreed.observeForever(selectedBreedObserver)
         advanceUntilIdle()
         verify(selectedBreedObserver).onChanged(mockData)

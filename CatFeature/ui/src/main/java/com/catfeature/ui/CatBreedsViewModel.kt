@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.catfeature.data.ApiResponse
-import com.catfeature.data.CatApiData
 import com.catfeature.data.CatBreedsRepo
+import com.catfeature.data.ListViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -26,11 +26,11 @@ class CatBreedsViewModel @Inject constructor(val catBreedsRepo: CatBreedsRepo): 
     private var _error = MutableLiveData(false)
     val error: LiveData<Boolean> get() = _error
 
-    private var _catBreeds = MutableLiveData<List<CatApiData>>()
-    val catBreeds: LiveData<List<CatApiData>> get() = _catBreeds
+    private var _catBreeds = MutableLiveData<List<ListViewData>>()
+    val catBreeds: LiveData<List<ListViewData>> get() = _catBreeds
 
-    private var _selectedbreed = MutableLiveData<CatApiData>()
-    val selectedbreed: LiveData<CatApiData> get() = _selectedbreed
+    private var _selectedbreed = MutableLiveData<ListViewData>()
+    val selectedbreed: LiveData<ListViewData> get() = _selectedbreed
 
     private var lastFetchedTime = 0L
 
@@ -67,7 +67,7 @@ class CatBreedsViewModel @Inject constructor(val catBreedsRepo: CatBreedsRepo): 
         return loading.value == false && currentTimeMillis - lastFetchedTime > COOL_DOWN
     }
 
-    fun setSelectedBreed(selectedBreed: CatApiData) {
+    fun setSelectedBreed(selectedBreed: ListViewData) {
         _selectedbreed.value = selectedBreed
     }
 }
