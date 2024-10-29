@@ -40,7 +40,7 @@ class CatBreedsFragment : Fragment() {
         _binding = FragmentCatBreedsBinding.inflate(inflater, container, false)
         binding.model = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        adapter = CatBreedsDataAdapter{ itemClicked ->
+        adapter = CatBreedsDataAdapter(context = requireContext()){ itemClicked ->
             viewModel.setSelectedBreed(itemClicked)
             navigator.openBreedDetailFragment()
         }

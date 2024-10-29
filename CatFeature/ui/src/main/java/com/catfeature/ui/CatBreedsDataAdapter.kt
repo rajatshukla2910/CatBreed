@@ -1,5 +1,6 @@
 package com.catfeature.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,6 +11,7 @@ import com.catfeature.ui.databinding.ItemLayoutBinding
 import com.squareup.picasso.Picasso
 
 class CatBreedsDataAdapter(
+    val context: Context,
     val onClick: (CatApiData) -> Unit
 ) : ListAdapter<CatApiData, CatBreedsDataAdapter.CatBreedsDataViewHolder>(CatApiDataDiffCallback()) {
 
@@ -36,9 +38,9 @@ class CatBreedsDataAdapter(
             .into(holder.binding.imageView)
 
         holder.binding.apply {
-            name.text = item.name
-            lifeSpan.text = item.life_span
-            origin.text = item.origin
+            name.text = context.getString(R.string.breed, item.name)
+            lifeSpan.text = context.getString(R.string.lifespan, item.life_span)
+            origin.text =  context.getString(R.string.origin, item.origin)
         }
     }
 

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity(), FragmentNavigator {
         setSupportActionBar(toolbar)
 
         supportActionBar?.apply {
-            title = "Cat Breeds"
+            title = getString(R.string.cat_breed_title)
             setDisplayHomeAsUpEnabled(true)
         }
 
